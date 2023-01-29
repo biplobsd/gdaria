@@ -1,0 +1,49 @@
+name: Build gdaria
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Bulid:
+    name: Build ${{matrix.arch}}
+    strategy:
+      max-parallel: 2
+      fail-fast: false
+      matrix:
+        include:
+          - arch: 'x86'
+            platfromType: 0
+          - arch: 'x64'
+            platfromType: 1
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+        architecture: ${{ matrix.arch }}
+
+    - name: Install requirements
+      run: pip install requests
+    
+    - name: Get dependencies aria2
+      run: python3 .\.ci\dependency.py ${{ matrix.platfromType }}
+
+    - name: 7z output files
+      run: |
+        mkdir gdaria
+        move gdaria.py gdaria
+        move README.md gdaria
+        move tools gdaria
+        7z a -t7z -mx=9 gdaria-debug_windows_${{ matrix.arch }}.7z ./gdaria
+  
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: package_windows_${{ matrix.arch }}
+        path: ./gdaria-debug_windows_${{ matrix.arch }}.7z 
+    
+    
