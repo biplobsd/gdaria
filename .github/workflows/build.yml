@@ -27,7 +27,7 @@ jobs:
         architecture: ${{ matrix.arch }}
 
     - name: Install requirements
-      run: pip install requests
+      run: pip install pyunpack patool requests
     
     - name: Get dependencies aria2
       run: python3 .\.ci\dependency.py ${{ matrix.platfromType }}
