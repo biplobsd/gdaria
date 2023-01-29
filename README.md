@@ -1,7 +1,7 @@
-gdaria.py is a Python script for downloading large files from Google Drive using aria2. The script uses the lxml library to parse the HTML from the Google Drive download page, extract the download link, and pass it as an argument to the aria2c command for downloading.
+gdaria.py is a Python script for downloading large files from Google Drive using aria2. The script uses the re library to find download link on HTML from the Google Drive download page, and pass it as an argument to the aria2c command for downloading.
 
 ## Installation
-No need to install any module dependency, just download gdaria from the release and extract the archive file.
+No need to install any module dependency, just download gdaria from the [release](https://github.com/biplobsd/gdaria/releases) and extract the archive file.
 
 ## Usage
 To use gdaria.py, you need to run the script in your terminal and pass the file ID as the first argument. For example:
